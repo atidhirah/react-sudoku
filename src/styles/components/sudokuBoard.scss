@@ -1,6 +1,6 @@
 .board-container,
 .sudoku-region,
-.sudoku-node {
+.node-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -15,32 +15,56 @@
       width: 50px;
       height: 50px;
       border: 1px solid black;
+      position: relative;
 
-      .node-item {
+      .node-buttons {
+        background-color: white;
         display: none;
-        justify-content: center;
-        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
 
-        .node-button {
-          background: none;
-          width: 100%;
-          height: 100%;
-          border: none;
-          font-size: 0.6rem;
-          text-align: center;
+        .node-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-          &:hover {
-            outline-style: inset;
-            outline-width: 1px;
-            outline-color: gray;
-            cursor: pointer;
+          .node-button {
+            background: none;
+            color: gray;
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 0.6rem;
+            text-align: center;
+
+            &:hover {
+              outline-style: inset;
+              outline-width: 1px;
+              outline-color: gray;
+              cursor: pointer;
+            }
           }
         }
       }
 
+      .node-value,
+      .node-notes {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
       &:hover {
-        .node-item {
-          display: flex;
+        .node-buttons {
+          display: grid;
         }
       }
     }
