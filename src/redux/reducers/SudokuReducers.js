@@ -1,8 +1,18 @@
 import { MODE, MAP } from "../actions/SudokuActions";
 
 const defaultState = {
-  mode: "notes", // "answer" or "notes"
+  mode: "answer", // "answer" or "notes"
   map: [],
+};
+
+const addOrRemoveNote = (arrInput, val) => {
+  let arr = [...arrInput];
+  if (arr.includes(val)) {
+    arr.splice(arr.indexOf(val), 1);
+  } else {
+    arr.push(val);
+  }
+  return arr;
 };
 
 const timerReducer = (state = defaultState, action) => {
@@ -13,11 +23,16 @@ const timerReducer = (state = defaultState, action) => {
       break;
     case MAP:
       const { arrMap, pos, val } = action;
-      newState.mode === "answer"
-        ? (arrMap[pos] = val)
-        : Array.isArray(arrMap[pos])
-        ? arrMap[pos].push(val)
-        : (arrMap[pos] = [val]);
+      if (newState.mode === "answer") {
+        arrMap[pos] = val;
+      } else {
+        let posVal = arrMap[pos];
+        if (Array.isArray(posVal)) {
+          arrMap[pos] = addOrRemoveNote(posVal, val);
+        } else {
+          arrMap[pos] = [val];
+        }
+      }
 
       newState.map = arrMap;
       break;

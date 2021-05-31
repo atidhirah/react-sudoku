@@ -27,11 +27,30 @@ class SudokuNode extends React.Component {
   }
 
   renderNotes() {
+    let arrNote = this.props.val;
     let btnList = this.getButtons();
+    let notes = Array(9)
+      .fill(0)
+      .map((_, i) => {
+        let style = {};
+        if (arrNote.includes(i + 1)) {
+          style.opacity = 1;
+        } else {
+          style.opacity = 0;
+        }
+
+        return (
+          <li key={i + 1} className="node-note" style={style}>
+            {i + 1}
+          </li>
+        );
+      });
+    console.log("NOTES");
+
     return (
       <div className="sudoku-node">
         {btnList}
-        <p className="node-notes">N</p>
+        <ul className="node-notes">{notes}</ul>
       </div>
     );
   }
