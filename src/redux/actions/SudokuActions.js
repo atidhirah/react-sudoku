@@ -1,15 +1,18 @@
 export const MODE = "MODE";
 export const MAP = "MAP";
+export const SELECTED_NODE = "SELECTED_NODE";
 
 // Game have 2 mode, "answer" and "notes"
-export const modeAction = (strMode) => ({
+export const modeAction = () => ({
   type: MODE,
-  strMode,
 });
 
-export const mapAction = (arrMap, pos, val) => ({
+export const mapAction = (val) => ({
   type: MAP,
-  arrMap,
-  pos,
   val,
+});
+
+export const selectNodeAction = (pos) => ({
+  type: SELECTED_NODE,
+  pos,
 });

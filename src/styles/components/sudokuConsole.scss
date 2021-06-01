@@ -1,0 +1,33 @@
+.sudoku-console,
+.console-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sudoku-console {
+  margin-top: 1rem;
+  .console-numbers {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+
+    .console-number {
+      height: 40px;
+
+      button {
+        background-color: white;
+        width: 70%;
+        height: 100%;
+        border: 2px solid black;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: lightblue;
+        }
+      }
+    }
+  }
+}

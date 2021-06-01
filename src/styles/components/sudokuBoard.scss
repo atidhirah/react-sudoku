@@ -1,4 +1,4 @@
-.board-container,
+.sudoku-board,
 .sudoku-region,
 .node-buttons,
 .node-notes {
@@ -6,7 +6,7 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.board-container {
+.sudoku-board {
   border: 2px solid black;
 
   .sudoku-region {
@@ -16,41 +16,6 @@
       width: 50px;
       height: 50px;
       border: 1px solid black;
-      position: relative;
-
-      .node-buttons {
-        background-color: white;
-        display: none;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 10;
-
-        .node-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          .node-button {
-            background: none;
-            color: gray;
-            width: 100%;
-            height: 100%;
-            border: none;
-            font-size: 0.6rem;
-            text-align: center;
-
-            &:hover {
-              outline-style: inset;
-              outline-width: 1px;
-              outline-color: gray;
-              cursor: pointer;
-            }
-          }
-        }
-      }
 
       .node-value {
         width: 100%;
@@ -76,9 +41,7 @@
       }
 
       &:hover {
-        .node-buttons {
-          display: grid;
-        }
+        background-color: lightblue !important;
       }
     }
   }

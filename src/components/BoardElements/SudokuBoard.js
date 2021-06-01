@@ -1,12 +1,13 @@
-import React from "react";
-import SudokuRegion from "./BoardElements/SudokuRegion";
+import React, { Component } from "react";
+import SudokuRegion from "./SudokuRegion";
 import Sudoku from "../../controllers/Sudoku";
 
-class SudokuBoard extends React.Component {
+class SudokuBoard extends Component {
   render() {
     const sudoku = new Sudoku();
     const regionMap = sudoku.regionMap;
     const arrMap = this.props.sudokuState.map;
+    const selectedVal = this.props.sudokuState.selected;
 
     let regionList = Array(9)
       .fill(0)
@@ -19,19 +20,20 @@ class SudokuBoard extends React.Component {
           <li key={key}>
             <SudokuRegion
               id={key}
-              arrMap={arrMap}
               arrPos={arrPos}
               arrVal={arrVal}
-              handleMap={this.props.handleMap}
+              selectedVal={selectedVal}
+              handleSelect={this.props.handleSelect}
             />
           </li>
         );
       });
 
     return (
-      <div id="sudoku-board">
-        <ul className="board-container">{regionList}</ul>
-      </div>
+      <>
+        <p>Mode : {this.props.sudokuState.mode}</p>
+        <ul className="sudoku-board">{regionList}</ul>
+      </>
     );
   }
 }

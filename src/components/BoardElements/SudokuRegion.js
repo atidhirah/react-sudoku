@@ -5,17 +5,19 @@ class SudokuRegion extends React.Component {
   render() {
     const arrPos = this.props.arrPos;
     const arrVal = this.props.arrVal;
+    const selectedVal = this.props.selectedVal;
 
     let nodeList = Array(9)
       .fill(0)
       .map((_, i) => {
+        const isSelected = selectedVal === arrPos[i] ? true : false;
         return (
           <li key={arrPos[i]}>
             <SudokuNode
-              arrMap={this.props.arrMap}
               pos={arrPos[i]}
               val={arrVal[i]}
-              handleMap={this.props.handleMap}
+              isSelected={isSelected}
+              handleSelect={this.props.handleSelect}
             />
           </li>
         );
