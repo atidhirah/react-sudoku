@@ -14,22 +14,27 @@ class SudokuConsole extends React.Component {
         );
       });
 
+    let mode = this.props.mode;
+    mode = mode[0].toUpperCase() + mode.slice(1);
+    mode = mode === "Answer" ? `Give ${mode}` : `Take ${mode}`;
+
     return (
       <div className="sudoku-console">
+        <p className="console-mode">
+          Mode : <span>{mode}</span>
+        </p>
         <ul className="console-buttons">
-          <button
-            className="console-switch"
-            onClick={() => this.props.handleMode()}
-          >
-            Change mode
-          </button>
-          {numberButtons}
-          <button
-            className="console-eraser"
-            onClick={() => this.props.handleMap(".")}
-          >
-            <BiEraser />
-          </button>
+          <li key="toggle" className="console-toggle">
+            <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
+          </li>
+          <li key="eraser" className="console-eraser">
+            <button onClick={() => this.props.handleMap(".")}>
+              <BiEraser />
+            </button>
+          </li>
+          <li key="numbers" className="console-numbers">
+            <ul>{numberButtons}</ul>
+          </li>
         </ul>
       </div>
     );

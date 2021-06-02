@@ -1,40 +1,80 @@
 .sudoku-console,
-.console-number,
-.console-eraser {
+.console-mode,
+.console-eraser > button {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .sudoku-console {
-  background-color: aqua;
-  width: 100%;
-  margin-top: 1rem;
+  flex-direction: column;
+  margin-left: 2rem;
+
+  .console-mode {
+    width: 100%;
+    padding: 0 4px;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
 
   .console-buttons {
-    width: 100%;
     display: grid;
-    grid-template-columns: repeat(11, 1fr);
+    grid-template-areas:
+      "t t e"
+      "n n n";
 
-    .console-switch {
-      font-size: 0.6rem;
+    gap: 10px;
+
+    .console-toggle {
+      grid-area: t;
+      width: 110px;
+      button {
+        text-transform: uppercase;
+        font-size: 0.65rem;
+      }
     }
 
-    .console-number {
-      height: 40px;
-
+    .console-eraser {
+      grid-area: e;
+      width: 50px;
       button {
-        background-color: white;
-        width: 80%;
-        height: 100%;
         font-size: 1.2rem;
-        border: 2px solid black;
-        border-radius: 8px;
-        cursor: pointer;
+      }
+    }
 
-        &:hover {
-          background-color: lightblue;
+    .console-numbers {
+      grid-area: n;
+
+      ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+
+        .console-number {
+          width: 50px;
+          height: 50px;
+          button {
+            font-size: 1.2rem;
+          }
         }
+      }
+    }
+
+    button {
+      font-family: "Poppins", sans-serif;
+      width: 100%;
+      height: 100%;
+      min-height: 30px;
+      background-color: $clrDark;
+      color: $clrLight;
+      border: 2px solid black;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #00adb5;
+        color: $clrDark;
       }
     }
   }

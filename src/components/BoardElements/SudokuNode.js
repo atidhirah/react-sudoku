@@ -14,20 +14,13 @@ class SudokuNode extends React.Component {
       ? this.renderNotes(val)
       : this.renderNumber(val);
 
-    let style = {
-      backgroundColor: isSelected
-        ? "#00adb5"
-        : isHelper
-        ? "#a6e3e9"
-        : "#eeeeee",
-    };
+    let bg = isSelected ? "selected" : isHelper ? "helper" : "default";
 
     return (
       <div
         id={`node-${this.props.pos}`}
-        className="sudoku-node"
+        className={`sudoku-node ${bg}`}
         onClick={() => this.handleClick()}
-        style={style}
       >
         {elem}
       </div>

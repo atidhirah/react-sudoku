@@ -32,10 +32,9 @@ class SudokuBoard extends Component {
       });
 
     return (
-      <>
-        <p>Mode : {this.props.sudokuState.mode}</p>
+      <div>
         <ul className="sudoku-board">{regionList}</ul>
-      </>
+      </div>
     );
   }
 }
