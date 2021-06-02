@@ -1,9 +1,12 @@
 import { MODE, MAP, SELECTED_NODE } from "../actions/SudokuActions";
+import Sudoku from "../../controllers/Sudoku";
 
+const sudoku = new Sudoku();
 const defaultState = {
   mode: "answer", // "answer" or "notes"
   map: [],
-  selected: 0,
+  selected: undefined,
+  helper: [],
 };
 
 const addOrRemoveNote = (arrInput, val) => {
@@ -25,7 +28,7 @@ const timerReducer = (state = defaultState, action) => {
     case MAP:
       const pos = newState.selected;
       const val = action.val;
-      if (newState.mode === "answer") {
+      if (newState.mode === "answer" || val === ".") {
         newState.map[pos] = val;
       } else {
         let posValue = newState.map[pos];
@@ -38,10 +41,13 @@ const timerReducer = (state = defaultState, action) => {
       break;
     case SELECTED_NODE:
       newState.selected = action.pos;
+      newState.helper = sudoku.getHelperNodes(action.pos);
       break;
     default:
       let map = Array(81).fill(".");
       newState.map = map;
+      newState.selected = 0;
+      newState.helper = sudoku.getHelperNodes(0);
   }
 
   return newState;

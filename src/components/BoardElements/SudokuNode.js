@@ -8,19 +8,26 @@ class SudokuNode extends React.Component {
 
   render() {
     const isSelected = this.props.isSelected;
+    const isHelper = this.props.isHelper;
     const val = this.props.val;
-    let elem;
-    if (Array.isArray(val)) {
-      elem = this.renderNotes(val);
-    } else {
-      elem = this.renderNumber(val);
-    }
+    let elem = Array.isArray(val)
+      ? this.renderNotes(val)
+      : this.renderNumber(val);
+
+    let style = {
+      backgroundColor: isSelected
+        ? "#00adb5"
+        : isHelper
+        ? "#a6e3e9"
+        : "#eeeeee",
+    };
 
     return (
       <div
+        id={`node-${this.props.pos}`}
         className="sudoku-node"
         onClick={() => this.handleClick()}
-        style={{ backgroundColor: isSelected ? "lightblue" : "white" }}
+        style={style}
       >
         {elem}
       </div>
@@ -49,6 +56,17 @@ class SudokuNode extends React.Component {
       });
 
     return <ul className="node-notes">{notes}</ul>;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.val !== nextProps.val ||
+      this.props.isSelected !== nextProps.isSelected ||
+      this.props.isHelper !== nextProps.isHelper
+    ) {
+      return true;
+    }
+    return false;
   }
 }
 

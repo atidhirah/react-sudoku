@@ -12,6 +12,83 @@ class Sudoku {
       region_9: [60, 61, 62, 69, 70, 71, 78, 79, 80],
     };
   }
+
+  getRowNodes(pos) {
+    const row = parseInt(pos / 9);
+    return Array(9)
+      .fill(0)
+      .map((_, i) => {
+        return row * 9 + i;
+      });
+  }
+
+  getColumnNodes(pos) {
+    const column = pos % 9;
+    return Array(9)
+      .fill(0)
+      .map((_, i) => {
+        return i * 9 + column;
+      });
+  }
+
+  getRegionNodes(pos) {
+    let region;
+    let map = this.regionMap;
+    for (let key in map) {
+      if (map[key].includes(pos)) {
+        region = map[key];
+      }
+    }
+    return region;
+  }
+
+  getHelperNodes(pos) {
+    const row = this.getRowNodes(pos);
+    const col = this.getColumnNodes(pos);
+    const reg = this.getRegionNodes(pos);
+    const helper = row.concat(col, reg);
+
+    return helper;
+  }
+
+  checkRowPlacement(map, pos, val) {
+    const rowPos = this.getRowNodes(pos);
+    const rowValues = rowPos.map((position) => {
+      return position === pos ? "X" : map[position];
+    });
+
+    return rowValues.includes(val) ? false : true;
+  }
+
+  checkColumnPlacement(map, pos, val) {
+    const columnPos = this.getColumnNodes(pos);
+    const columnValues = columnPos.map((position) => {
+      return position === pos ? "X" : map[position];
+    });
+
+    return columnValues.includes(val) ? false : true;
+  }
+
+  checkRegionPlacement(map, pos, val) {
+    let region = this.getRegionNodes(pos);
+    const regionValues = region.map((position) => {
+      return position === pos ? "X" : map[position];
+    });
+
+    return regionValues.includes(val) ? false : true;
+  }
+
+  checkPlacement(map, pos, val) {
+    if (
+      this.checkRowPlacement(map, pos, val) &&
+      this.checkColumnPlacement(map, pos, val) &&
+      this.checkRegionPlacement(map, pos, val)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 export default Sudoku;

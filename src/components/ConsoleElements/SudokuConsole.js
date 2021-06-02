@@ -1,4 +1,5 @@
 import React from "react";
+import { BiEraser } from "react-icons/bi";
 
 class SudokuConsole extends React.Component {
   render() {
@@ -15,8 +16,21 @@ class SudokuConsole extends React.Component {
 
     return (
       <div className="sudoku-console">
-        <button onClick={() => this.props.handleMode()}>Switch mode</button>
-        <ul className="console-numbers">{numberButtons}</ul>
+        <ul className="console-buttons">
+          <button
+            className="console-switch"
+            onClick={() => this.props.handleMode()}
+          >
+            Change mode
+          </button>
+          {numberButtons}
+          <button
+            className="console-eraser"
+            onClick={() => this.props.handleMap(".")}
+          >
+            <BiEraser />
+          </button>
+        </ul>
       </div>
     );
   }

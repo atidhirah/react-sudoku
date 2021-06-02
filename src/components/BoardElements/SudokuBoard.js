@@ -7,6 +7,7 @@ class SudokuBoard extends Component {
     const sudoku = new Sudoku();
     const regionMap = sudoku.regionMap;
     const arrMap = this.props.sudokuState.map;
+    const arrHelper = this.props.sudokuState.helper;
     const selectedVal = this.props.sudokuState.selected;
 
     let regionList = Array(9)
@@ -22,6 +23,7 @@ class SudokuBoard extends Component {
               id={key}
               arrPos={arrPos}
               arrVal={arrVal}
+              arrHelper={arrHelper}
               selectedVal={selectedVal}
               handleSelect={this.props.handleSelect}
             />

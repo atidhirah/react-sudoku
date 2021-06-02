@@ -13,7 +13,7 @@
     border: 1px solid black;
 
     .sudoku-node {
-      width: 50px;
+      width: 100%;
       height: 50px;
       border: 1px solid black;
 
@@ -41,7 +41,7 @@
       }
 
       &:hover {
-        background-color: lightblue !important;
+        background-color: #00adb5 !important;
       }
     }
   }
