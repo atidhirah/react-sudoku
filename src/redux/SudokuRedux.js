@@ -3,6 +3,7 @@ import {
   modeAction,
   mapAction,
   selectNodeAction,
+  modalAction,
 } from "./actions/SudokuActions";
 import SudokuGame from "../components/SudokuGame";
 
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   selectNode: (pos) => {
     dispatch(selectNodeAction(pos));
+  },
+  handleModal: (modalStatus, modalName) => {
+    dispatch(modalAction(modalStatus, modalName));
   },
 });
 

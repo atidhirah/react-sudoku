@@ -1,4 +1,4 @@
-import { MODE, MAP, SELECTED_NODE } from "../actions/SudokuActions";
+import { MODE, MAP, SELECTED_NODE, MODAL } from "../actions/SudokuActions";
 import Sudoku from "../../controllers/Sudoku";
 
 const sudoku = new Sudoku();
@@ -7,6 +7,8 @@ const defaultState = {
   map: [],
   selected: undefined,
   helper: [],
+  modalStatus: false,
+  modalName: "",
 };
 
 const addOrRemoveNote = (arrInput, val) => {
@@ -42,6 +44,10 @@ const timerReducer = (state = defaultState, action) => {
     case SELECTED_NODE:
       newState.selected = action.pos;
       newState.helper = sudoku.getHelperNodes(action.pos);
+      break;
+    case MODAL:
+      newState.modalStatus = action.modalStatus;
+      newState.modalName = action.modalName;
       break;
     default:
       let map = Array(81).fill(".");

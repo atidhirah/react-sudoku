@@ -1,0 +1,41 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  .modal-content {
+    background-color: $clrDark;
+    width: 300px;
+    min-height: 150px;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        color: $clrLight;
+        background: none;
+        border: none;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.7rem;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
