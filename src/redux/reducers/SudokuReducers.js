@@ -1,24 +1,22 @@
-import { MODE, MAP, SELECTED_NODE, MODAL } from "../actions/SudokuActions";
+import {
+  MODE,
+  SELECTED_NODE,
+  MAP,
+  MODAL,
+  MAKE_GAME,
+  NEW_GAME,
+  SOLVE,
+} from "../actions/SudokuActions";
 import Sudoku from "../../controllers/Sudoku";
 
 const sudoku = new Sudoku();
 const defaultState = {
-  mode: "answer", // "answer" or "notes"
-  map: [],
+  mode: "answer", // ["answer", "notes", "makegame", "win"]
+  map: Array(81).fill("."),
   selected: undefined,
   helper: [],
   modalStatus: false,
-  modalName: "",
-};
-
-const addOrRemoveNote = (arrInput, val) => {
-  let arr = [...arrInput];
-  if (arr.includes(val)) {
-    arr.splice(arr.indexOf(val), 1);
-  } else {
-    arr.push(val);
-  }
-  return arr;
+  modalName: "", // ["", "makegame", "newgame", "solve"]
 };
 
 const timerReducer = (state = defaultState, action) => {
@@ -27,36 +25,58 @@ const timerReducer = (state = defaultState, action) => {
     case MODE:
       newState.mode = newState.mode === "answer" ? "notes" : "answer";
       break;
-    case MAP:
-      const pos = newState.selected;
-      const val = action.val;
-      if (newState.mode === "answer" || val === ".") {
-        newState.map[pos] = val;
-      } else {
-        let posValue = newState.map[pos];
-        if (Array.isArray(posValue)) {
-          newState.map[pos] = addOrRemoveNote(posValue, val);
-        } else {
-          newState.map[pos] = [val];
-        }
-      }
-      break;
     case SELECTED_NODE:
       newState.selected = action.pos;
       newState.helper = sudoku.getHelperNodes(action.pos);
+      break;
+    case MAP:
+      let [mode, pos, val] = [newState.mode, newState.selected, action.val];
+      if (mode === "answer" || mode === "makegame" || val === ".") {
+        newState.map[pos] = val;
+      } else {
+        let posValue = newState.map[pos];
+        newState.map[pos] = Array.isArray(posValue)
+          ? addOrRemoveNotes(posValue, val)
+          : [val];
+      }
       break;
     case MODAL:
       newState.modalStatus = action.modalStatus;
       newState.modalName = action.modalName;
       break;
+    case MAKE_GAME:
+      newState = {
+        ...defaultState,
+        mode: "makegame",
+        map: Array(81).fill("."),
+      };
+      break;
+    case SOLVE:
+      newState = {
+        ...defaultState,
+        mode: "win",
+      };
+      break;
+    case NEW_GAME:
     default:
-      let map = Array(81).fill(".");
-      newState.map = map;
-      newState.selected = 0;
-      newState.helper = sudoku.getHelperNodes(0);
+      let difficulty = action.difficulty ? action.difficulty : "easy";
+      newState = {
+        ...defaultState,
+        map: sudoku.generateGame(difficulty),
+      };
   }
 
   return newState;
+};
+
+const addOrRemoveNotes = (arrInput, val) => {
+  let arr = [...arrInput];
+  if (arr.includes(val)) {
+    arr.splice(arr.indexOf(val), 1);
+  } else {
+    arr.push(val);
+  }
+  return arr;
 };
 
 export default timerReducer;

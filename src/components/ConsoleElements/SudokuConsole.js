@@ -3,12 +3,9 @@ import { BiEraser } from "react-icons/bi";
 
 class SudokuConsole extends React.Component {
   render() {
+    let mode = this.getMode();
     let numberButtons = this.numberButtons();
     let gameButtons = this.gameButtons();
-
-    let mode = this.props.mode;
-    mode = mode[0].toUpperCase() + mode.slice(1);
-    mode = mode === "Answer" ? `Give ${mode}` : `Take ${mode}`;
 
     return (
       <div className="sudoku-console">
@@ -23,6 +20,20 @@ class SudokuConsole extends React.Component {
     );
   }
 
+  getMode() {
+    let mode = this.props.mode;
+    switch (mode) {
+      case "win":
+        return "You Win!";
+      case "makegame":
+        return "Make Game";
+      case "notes":
+        return "Take Notes";
+      default:
+        return "Give Answer";
+    }
+  }
+
   numberButtons() {
     let numberButtons = Array(9)
       .fill(0)
@@ -35,9 +46,13 @@ class SudokuConsole extends React.Component {
         );
       });
 
+    let isMakeGame = this.props.mode === "makegame" ? true : false;
     return (
       <>
-        <li key="toggle" className="console-toggle">
+        <li
+          key="toggle"
+          className={isMakeGame ? "console-toggle disabled" : "console-toggle"}
+        >
           <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
         </li>
         <li key="eraser" className="console-eraser">
@@ -53,21 +68,25 @@ class SudokuConsole extends React.Component {
   }
 
   gameButtons() {
-    let name = this.props.modalName;
+    const mode = this.props.mode;
+    let isMakeGame = mode === "makegame" ? true : false;
     return (
       <>
         <li key="newGame" className="console-new-game">
-          <button onClick={() => this.props.handleModal(true, name)}>
+          <button onClick={() => this.props.handleModal(true, "newgame")}>
             New Game
           </button>
         </li>
         <li key="makeGame" className="console-make-game">
-          <button onClick={() => this.props.handleModal(true, name)}>
-            Make Own Game
+          <button onClick={() => this.props.handleModal(true, "makegame")}>
+            {isMakeGame ? "Done" : "Make Own Game"}
           </button>
         </li>
         <li key="solve" className="console-solve">
-          <button onClick={() => this.props.handleModal(true, name)}>
+          <button
+            className={isMakeGame ? "disabled" : ""}
+            onClick={() => this.props.handleModal(true, "solve")}
+          >
             Solve this pls
           </button>
         </li>

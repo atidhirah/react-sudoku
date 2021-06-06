@@ -1,10 +1,6 @@
 import React from "react";
 
 class Modals extends React.Component {
-  handleClick(status, name) {
-    this.props.handleModal(status, name);
-  }
-
   render() {
     const status = this.props.modalStatus;
     const name = this.props.modalName;
@@ -36,12 +32,19 @@ class Modals extends React.Component {
   }
 
   modalButtons(name) {
+    let handleClick;
+    if (name === "makegame") {
+      handleClick = this.props.handleMakeGame;
+    } else if (name === "newgame") {
+      handleClick = this.props.handleNewGame;
+    } else {
+      handleClick = this.props.handleSolve;
+    }
+
     return (
       <>
-        <button onClick={() => this.handleClick(true, name)}>
-          Yes I am sure
-        </button>
-        <button onClick={() => this.handleClick(false, "")}>
+        <button onClick={() => handleClick()}>Yes I am sure</button>
+        <button onClick={() => this.props.handleModal(false, "")}>
           No I change my mind
         </button>
       </>

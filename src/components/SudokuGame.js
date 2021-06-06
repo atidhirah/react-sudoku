@@ -22,6 +22,9 @@ class SudokuGame extends React.Component {
           modalStatus={this.props.sudokuState.modalStatus}
           modalName={this.props.sudokuState.modalName}
           handleModal={this.props.handleModal}
+          handleNewGame={this.props.handleNewGame}
+          handleMakeGame={this.props.handleMakeGame}
+          handleSolve={this.props.handleSolve}
         />
       </div>
     );

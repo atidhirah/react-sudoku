@@ -4,6 +4,9 @@ import {
   mapAction,
   selectNodeAction,
   modalAction,
+  makeGameAction,
+  newGameAction,
+  solveAction,
 } from "./actions/SudokuActions";
 import SudokuGame from "../components/SudokuGame";
 
@@ -20,6 +23,15 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleModal: (modalStatus, modalName) => {
     dispatch(modalAction(modalStatus, modalName));
+  },
+  handleNewGame: (difficulty) => {
+    dispatch(newGameAction(difficulty));
+  },
+  handleMakeGame: () => {
+    dispatch(makeGameAction());
+  },
+  handleSolve: () => {
+    dispatch(solveAction());
   },
 });
 

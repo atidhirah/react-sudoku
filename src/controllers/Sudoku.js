@@ -1,3 +1,5 @@
+import solvedSudoku from "./solvedSudoku";
+
 class Sudoku {
   constructor() {
     this.regionMap = {
@@ -78,16 +80,34 @@ class Sudoku {
     return regionValues.includes(val) ? false : true;
   }
 
-  checkPlacement(map, pos, val) {
+  checkPlacement(sudokuMap, pos, val) {
     if (
-      this.checkRowPlacement(map, pos, val) &&
-      this.checkColumnPlacement(map, pos, val) &&
-      this.checkRegionPlacement(map, pos, val)
+      this.checkRowPlacement(sudokuMap, pos, val) &&
+      this.checkColumnPlacement(sudokuMap, pos, val) &&
+      this.checkRegionPlacement(sudokuMap, pos, val)
     ) {
       return true;
     } else {
       return false;
     }
+  }
+
+  solveGame(sudokuMap) {
+    let arr = sudokuMap.map((node) => (Array.isArray(node) ? "." : node));
+  }
+
+  generateGame(difficulty) {
+    const solved =
+      solvedSudoku[Math.floor(Math.random() * (solvedSudoku.length - 1))];
+    const arrMap = Array(81).fill(".");
+    let clue = difficulty === "easy" ? 38 : difficulty === "medium" ? 30 : 21;
+    let cluePos = [];
+    while (cluePos.length < clue) {
+      let pos = Math.floor(Math.random() * 80);
+      if (!cluePos.includes(pos)) cluePos.push(pos);
+    }
+
+    return arrMap.map((_, i) => (cluePos.includes(i) ? solved[i] : "."));
   }
 }
 
