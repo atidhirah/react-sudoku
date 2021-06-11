@@ -44,13 +44,35 @@ class Sudoku {
     return region;
   }
 
-  getHelperNodes(pos) {
+  getHelperNodes(map, pos) {
     const row = this.getRowNodes(pos);
     const col = this.getColumnNodes(pos);
     const reg = this.getRegionNodes(pos);
     const helper = row.concat(col, reg);
-
+    if (map[pos] !== ".") {
+      map.forEach((val, i) => {
+        if (map[pos] === val) helper.push(i);
+      });
+    }
     return helper;
+  }
+
+  getProhibitedNum(map, helper, pos) {
+    if (map[pos] !== "." && !Array.isArray(map[pos])) {
+      return Array(9)
+        .fill(0)
+        .map((_, i) => i + 1);
+    }
+    const prohibitedNum = [];
+
+    helper.forEach((i) => {
+      if (map[i] !== "." && !Array.isArray(map[i])) {
+        if (!prohibitedNum.includes(map[i])) {
+          prohibitedNum.push(map[i]);
+        }
+      }
+    });
+    return prohibitedNum.map((val) => +val);
   }
 
   checkRowPlacement(map, pos, val) {

@@ -35,12 +35,16 @@ class SudokuConsole extends React.Component {
   }
 
   numberButtons() {
+    const prohibited = this.props.prohibitedNum;
     let numberButtons = Array(9)
       .fill(0)
       .map((_, i) => {
         let num = i + 1;
+        let className = prohibited.includes(num)
+          ? "console-number disabled"
+          : "console-number";
         return (
-          <li key={num} className="console-number">
+          <li key={num} className={className}>
             <button onClick={() => this.props.handleMap(num)}>{num}</button>
           </li>
         );

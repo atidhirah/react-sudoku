@@ -15,6 +15,7 @@ const defaultState = {
   map: Array(81).fill("."),
   selected: undefined,
   helper: [],
+  prohibitedNum: [],
   modalStatus: false,
   modalName: "", // ["", "makegame", "newgame", "solve"]
 };
@@ -27,12 +28,17 @@ const timerReducer = (state = defaultState, action) => {
       break;
     case SELECTED_NODE:
       newState.selected = action.pos;
-      newState.helper = sudoku.getHelperNodes(action.pos);
+      newState.helper = sudoku.getHelperNodes(newState.map, action.pos);
+      newState.prohibitedNum = sudoku.getProhibitedNum(
+        newState.map,
+        newState.helper,
+        action.pos
+      );
       break;
     case MAP:
       let [mode, pos, val] = [newState.mode, newState.selected, action.val];
       if (mode === "answer" || mode === "makegame" || val === ".") {
-        newState.map[pos] = val;
+        newState.map[pos] = val.toString();
       } else {
         let posValue = newState.map[pos];
         newState.map[pos] = Array.isArray(posValue)
