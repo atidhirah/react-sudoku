@@ -13,10 +13,12 @@ class SudokuGame extends React.Component {
         />
         <SudokuConsole
           mode={this.props.sudokuState.mode}
+          selected={this.props.sudokuState.selected}
           prohibitedNum={this.props.sudokuState.prohibitedNum}
           modalName={this.props.sudokuState.modalName}
           handleMode={this.props.handleMode}
           handleMap={this.props.handleMap}
+          handleEraser={this.props.handleEraser}
           handleModal={this.props.handleModal}
         />
         <Modals

@@ -36,6 +36,8 @@ class SudokuConsole extends React.Component {
 
   numberButtons() {
     const prohibited = this.props.prohibitedNum;
+    let isMakeGame = this.props.mode === "makegame" ? true : false;
+    let selected = this.props.selected;
     let numberButtons = Array(9)
       .fill(0)
       .map((_, i) => {
@@ -50,7 +52,6 @@ class SudokuConsole extends React.Component {
         );
       });
 
-    let isMakeGame = this.props.mode === "makegame" ? true : false;
     return (
       <>
         <li
@@ -59,8 +60,11 @@ class SudokuConsole extends React.Component {
         >
           <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
         </li>
-        <li key="eraser" className="console-eraser">
-          <button onClick={() => this.props.handleMap(".")}>
+        <li
+          key="eraser"
+          className={selected ? "console-eraser" : "console-eraser disabled"}
+        >
+          <button onClick={() => this.props.handleEraser()}>
             <BiEraser />
           </button>
         </li>

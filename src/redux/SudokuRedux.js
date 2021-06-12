@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import {
   modeAction,
-  mapAction,
+  fillNodeAction,
   selectNodeAction,
+  eraserAction,
   modalAction,
   makeGameAction,
   newGameAction,
@@ -16,10 +17,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(modeAction());
   },
   handleMap: (val) => {
-    dispatch(mapAction(val));
+    dispatch(fillNodeAction(val));
   },
   selectNode: (pos) => {
     dispatch(selectNodeAction(pos));
+  },
+  handleEraser: () => {
+    dispatch(eraserAction());
   },
   handleModal: (modalStatus, modalName) => {
     dispatch(modalAction(modalStatus, modalName));

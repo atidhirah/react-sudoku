@@ -7,17 +7,18 @@
 }
 
 .sudoku-board {
+  color: $clrNumber;
   width: fit-content;
-  border: 2px solid black;
+  border: 2px solid $clrBorder;
 
   .sudoku-region {
-    border: 1px solid black;
+    border: 1px solid $clrBorder;
 
     .sudoku-node {
       width: 50px;
       height: 50px;
-      background-color: $clrDark;
-      border: 1px solid black;
+      background-color: $clrBoardBg;
+      border: 1px solid $clrBorder;
 
       .node-value {
         width: 100%;
@@ -44,18 +45,18 @@
       }
 
       &:hover {
-        background-color: $clrDarkBlue !important;
+        background-color: $clrSelectedNode !important;
       }
     }
 
     .selected {
-      background-color: $clrDarkBlue !important;
-      color: $clrDarker !important;
+      background-color: $clrSelectedNode !important;
+      color: $clrNumber !important;
     }
 
     .helper {
-      background-color: $clrLightBlue !important;
-      color: $clrDarker !important;
+      background-color: $clrHelperNode !important;
+      color: $clrNumber !important;
     }
   }
 }

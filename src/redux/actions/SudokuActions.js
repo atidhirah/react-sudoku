@@ -1,6 +1,7 @@
 export const MODE = "MODE";
 export const SELECTED_NODE = "SELECTED_NODE";
-export const MAP = "MAP";
+export const FILL_NODE = "FILL_NODE";
+export const ERASER = "ERASER";
 export const MODAL = "MODAL";
 export const MAKE_GAME = "MAKE_GAME";
 export const NEW_GAME = "NEW_GAME";
@@ -18,9 +19,13 @@ export const selectNodeAction = (pos) => ({
 });
 
 // Called when user filling node on sudoku board
-export const mapAction = (val) => ({
-  type: MAP,
+export const fillNodeAction = (val) => ({
+  type: FILL_NODE,
   val,
+});
+
+export const eraserAction = () => ({
+  type: ERASER,
 });
 
 // Show or hide modal pop-up

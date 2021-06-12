@@ -1,7 +1,8 @@
 import {
   MODE,
   SELECTED_NODE,
-  MAP,
+  FILL_NODE,
+  ERASER,
   MODAL,
   MAKE_GAME,
   NEW_GAME,
@@ -15,35 +16,48 @@ const defaultState = {
   map: Array(81).fill("."),
   selected: undefined,
   helper: [],
-  prohibitedNum: [],
+  prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
   modalStatus: false,
   modalName: "", // ["", "makegame", "newgame", "solve"]
 };
 
-const timerReducer = (state = defaultState, action) => {
+const sudokuReducer = (state = defaultState, action) => {
   let newState = { ...state };
+  const { mode, map, selected } = newState;
+
   switch (action.type) {
     case MODE:
-      newState.mode = newState.mode === "answer" ? "notes" : "answer";
+      if (mode === "answer" || mode === "notes") {
+        newState.mode = mode === "answer" ? "notes" : "answer";
+      }
       break;
     case SELECTED_NODE:
+      const helper = sudoku.getHelper(map, action.pos);
       newState.selected = action.pos;
-      newState.helper = sudoku.getHelperNodes(newState.map, action.pos);
-      newState.prohibitedNum = sudoku.getProhibitedNum(
-        newState.map,
-        newState.helper,
-        action.pos
-      );
+      newState.helper = helper.helperNode;
+      newState.prohibitedNum = helper.prohibitedNum;
       break;
-    case MAP:
-      let [mode, pos, val] = [newState.mode, newState.selected, action.val];
-      if (mode === "answer" || mode === "makegame" || val === ".") {
-        newState.map[pos] = val.toString();
-      } else {
-        let posValue = newState.map[pos];
-        newState.map[pos] = Array.isArray(posValue)
-          ? addOrRemoveNotes(posValue, val)
-          : [val];
+    case FILL_NODE:
+      if (mode === "answer" || mode === "makegame") {
+        newState.map[selected] = action.val;
+        newState.prohibitedNum = defaultState.prohibitedNum;
+      } else if (mode === "notes") {
+        newState.map[selected] = Array.isArray(map[selected])
+          ? addOrRemoveNotes(map[selected], action.val)
+          : [action.val];
+      }
+      break;
+    case ERASER:
+      if (selected) {
+        if (map[selected] !== ".") {
+          newState.map[selected] = ".";
+          const helper = sudoku.getHelper(newState.map, selected);
+          newState.prohibitedNum = helper.prohibitedNum;
+        } else {
+          newState.selected = undefined;
+          newState.helper = [];
+          newState.prohibitedNum = defaultState.prohibitedNum;
+        }
       }
       break;
     case MODAL:
@@ -85,4 +99,4 @@ const addOrRemoveNotes = (arrInput, val) => {
   return arr;
 };
 
-export default timerReducer;
+export default sudokuReducer;

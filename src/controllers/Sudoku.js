@@ -44,35 +44,35 @@ class Sudoku {
     return region;
   }
 
-  getHelperNodes(map, pos) {
+  getHelper(map, pos) {
+    const selectedValue = map[pos];
     const row = this.getRowNodes(pos);
     const col = this.getColumnNodes(pos);
     const reg = this.getRegionNodes(pos);
-    const helper = row.concat(col, reg);
-    if (map[pos] !== ".") {
+
+    const helperNode = row.concat(col, reg);
+    if (selectedValue !== ".") {
       map.forEach((val, i) => {
-        if (map[pos] === val) helper.push(i);
+        if (selectedValue === val) helperNode.push(i);
       });
     }
-    return helper;
-  }
 
-  getProhibitedNum(map, helper, pos) {
-    if (map[pos] !== "." && !Array.isArray(map[pos])) {
-      return Array(9)
-        .fill(0)
-        .map((_, i) => i + 1);
-    }
-    const prohibitedNum = [];
-
-    helper.forEach((i) => {
-      if (map[i] !== "." && !Array.isArray(map[i])) {
-        if (!prohibitedNum.includes(map[i])) {
-          prohibitedNum.push(map[i]);
+    let pNum = [];
+    if (Number(selectedValue)) {
+      pNum = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    } else {
+      helperNode.forEach((i) => {
+        let val = map[i];
+        if (Number(val) && !pNum.includes(val)) {
+          pNum.push(val);
         }
-      }
-    });
-    return prohibitedNum.map((val) => +val);
+      });
+    }
+
+    return {
+      helperNode: helperNode,
+      prohibitedNum: pNum,
+    };
   }
 
   checkRowPlacement(map, pos, val) {
@@ -103,33 +103,30 @@ class Sudoku {
   }
 
   checkPlacement(sudokuMap, pos, val) {
-    if (
-      this.checkRowPlacement(sudokuMap, pos, val) &&
-      this.checkColumnPlacement(sudokuMap, pos, val) &&
-      this.checkRegionPlacement(sudokuMap, pos, val)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    if (!this.checkRowPlacement(sudokuMap, pos, val)) return false;
+    if (!this.checkColumnPlacement(sudokuMap, pos, val)) return false;
+    if (!this.checkRegionPlacement(sudokuMap, pos, val)) return false;
+
+    return true;
   }
 
   solveGame(sudokuMap) {
     let arr = sudokuMap.map((node) => (Array.isArray(node) ? "." : node));
   }
 
-  generateGame(difficulty) {
-    const solved =
-      solvedSudoku[Math.floor(Math.random() * (solvedSudoku.length - 1))];
+  generateGame(level) {
+    const random = (i) => Math.floor(Math.random() * (i - 1));
+    const solved = solvedSudoku[random(solvedSudoku.length)];
     const arrMap = Array(81).fill(".");
-    let clue = difficulty === "easy" ? 38 : difficulty === "medium" ? 30 : 21;
+
+    let clueCount = level === "easy" ? 38 : level === "medium" ? 30 : 20;
     let cluePos = [];
-    while (cluePos.length < clue) {
-      let pos = Math.floor(Math.random() * 80);
+    while (cluePos.length <= clueCount) {
+      let pos = random(81);
       if (!cluePos.includes(pos)) cluePos.push(pos);
     }
 
-    return arrMap.map((_, i) => (cluePos.includes(i) ? solved[i] : "."));
+    return arrMap.map((_, i) => (cluePos.includes(i) ? +solved[i] : "."));
   }
 }
 
