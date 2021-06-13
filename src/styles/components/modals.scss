@@ -11,7 +11,7 @@
   z-index: 100;
 
   .modal-content {
-    background-color: $clrDark;
+    background-color: $clrBoardBg;
     width: 300px;
     min-height: 150px;
     padding: 1rem;
@@ -20,12 +20,16 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .modal-text {
+      color: $clrNumber;
+    }
+
     .modal-buttons {
       display: flex;
       justify-content: space-between;
 
       button {
-        color: $clrLight;
+        color: $clrNumber;
         background: none;
         border: none;
         font-family: "Poppins", sans-serif;

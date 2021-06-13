@@ -52,6 +52,7 @@ const sudokuReducer = (state = defaultState, action) => {
         if (map[selected] !== ".") {
           newState.map[selected] = ".";
           const helper = sudoku.getHelper(newState.map, selected);
+          newState.helper = helper.helperNode;
           newState.prohibitedNum = helper.prohibitedNum;
         } else {
           newState.selected = undefined;
@@ -85,7 +86,6 @@ const sudokuReducer = (state = defaultState, action) => {
         map: sudoku.generateGame(difficulty),
       };
   }
-
   return newState;
 };
 
