@@ -7,6 +7,7 @@ class SudokuNode extends React.Component {
   }
 
   render() {
+    const isStarter = this.props.isStarter;
     const isSelected = this.props.isSelected;
     const isHelper = this.props.isHelper;
     const val = this.props.val;
@@ -14,7 +15,8 @@ class SudokuNode extends React.Component {
       ? this.renderNotes(val)
       : this.renderNumber(val);
 
-    let bg = isSelected ? "selected" : isHelper ? "helper" : "default";
+    let bg = isStarter ? "starter" : "";
+    bg += isSelected ? " selected" : isHelper ? " helper" : " default";
 
     return (
       <div

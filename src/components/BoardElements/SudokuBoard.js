@@ -6,6 +6,7 @@ class SudokuBoard extends Component {
   render() {
     const sudoku = new Sudoku();
     const regionMap = sudoku.regionMap;
+    const arrStarterMap = this.props.sudokuState.starterMap;
     const arrMap = this.props.sudokuState.map;
     const arrHelper = this.props.sudokuState.helper;
     const selectedVal = this.props.sudokuState.selected;
@@ -15,6 +16,7 @@ class SudokuBoard extends Component {
       .map((_, i) => {
         const key = `region_${i + 1}`;
         const arrPos = regionMap[key];
+        const arrStarter = arrPos.map((pos) => arrStarterMap[pos]);
         const arrVal = arrPos.map((pos) => arrMap[pos]);
 
         return (
@@ -22,6 +24,7 @@ class SudokuBoard extends Component {
             <SudokuRegion
               id={key}
               arrPos={arrPos}
+              arrStarter={arrStarter}
               arrVal={arrVal}
               arrHelper={arrHelper}
               selectedVal={selectedVal}

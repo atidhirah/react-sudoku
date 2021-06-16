@@ -49,14 +49,16 @@
       }
     }
 
+    .starter {
+      color: $clrPermanentNumber !important;
+    }
+
     .selected {
       background-color: $clrSelectedNode !important;
-      color: $clrNumber !important;
     }
 
     .helper {
       background-color: $clrHelperNode !important;
-      color: $clrNumber !important;
     }
   }
 }

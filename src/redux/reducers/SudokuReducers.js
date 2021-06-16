@@ -11,9 +11,12 @@ import {
 import Sudoku from "../../controllers/Sudoku";
 
 const sudoku = new Sudoku();
+const emptyMap = Array(81).fill(".");
 const defaultState = {
   mode: "answer", // ["answer", "notes", "makegame", "win"]
-  map: Array(81).fill("."),
+  solvedMap: [],
+  starterMap: [],
+  map: [],
   selected: undefined,
   helper: [],
   prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -38,6 +41,7 @@ const sudokuReducer = (state = defaultState, action) => {
       newState.prohibitedNum = helper.prohibitedNum;
       break;
     case FILL_NODE:
+      sudoku.solveGame(newState.map);
       if (mode === "answer" || mode === "makegame") {
         newState.map[selected] = action.val;
         newState.prohibitedNum = defaultState.prohibitedNum;
@@ -46,6 +50,7 @@ const sudokuReducer = (state = defaultState, action) => {
           ? addOrRemoveNotes(map[selected], action.val)
           : [action.val];
       }
+
       break;
     case ERASER:
       if (selected) {
@@ -69,21 +74,26 @@ const sudokuReducer = (state = defaultState, action) => {
       newState = {
         ...defaultState,
         mode: "makegame",
-        map: Array(81).fill("."),
+        solvedMap: emptyMap,
+        map: emptyMap,
       };
       break;
     case SOLVE:
       newState = {
         ...defaultState,
         mode: "win",
+        map: newState.solvedMap,
       };
       break;
     case NEW_GAME:
     default:
       let difficulty = action.difficulty ? action.difficulty : "easy";
+      let game = sudoku.generateGame(difficulty);
       newState = {
         ...defaultState,
-        map: sudoku.generateGame(difficulty),
+        solvedMap: [...game.solvedMap],
+        starterMap: [...game.gameMap],
+        map: [...game.gameMap],
       };
   }
   return newState;

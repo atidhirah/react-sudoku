@@ -103,6 +103,7 @@ class Sudoku {
   }
 
   checkPlacement(sudokuMap, pos, val) {
+    if (val < 1 || val > 9) return false;
     if (!this.checkRowPlacement(sudokuMap, pos, val)) return false;
     if (!this.checkColumnPlacement(sudokuMap, pos, val)) return false;
     if (!this.checkRegionPlacement(sudokuMap, pos, val)) return false;
@@ -111,22 +112,66 @@ class Sudoku {
   }
 
   solveGame(sudokuMap) {
+    // Delete all notes in sudoku map
     let arr = sudokuMap.map((node) => (Array.isArray(node) ? "." : node));
+    // Find all empty nodes position
+    let emptyNodes = arr.reduce((acc, val, i) => {
+      if (val === ".") acc.push(i);
+      return acc;
+    }, []);
+
+    let i = 0; // Index for iterate through emptyNodes array
+    while (i >= 0 && i < emptyNodes.length) {
+      let pos = emptyNodes[i];
+      let num = arr[pos] === "." ? 1 : arr[pos] + 1;
+      let isFilled = false;
+      while (!isFilled && num <= 9) {
+        if (this.checkPlacement(arr, pos, num)) {
+          arr[pos] = num;
+          i += 1;
+          isFilled = true;
+        } else {
+          num += 1;
+        }
+      }
+
+      if (!isFilled) {
+        arr[pos] = ".";
+        i -= 1;
+      }
+    }
+
+    return i < 0 ? false : arr;
   }
 
   generateGame(level) {
     const random = (i) => Math.floor(Math.random() * (i - 1));
-    const solved = solvedSudoku[random(solvedSudoku.length)];
-    const arrMap = Array(81).fill(".");
+    const solved = solvedSudoku[random(solvedSudoku.length)]
+      .split("")
+      .map((item) => +item);
+    const outputMap = [...solved];
 
     let clueCount = level === "easy" ? 38 : level === "medium" ? 30 : 20;
-    let cluePos = [];
-    while (cluePos.length <= clueCount) {
-      let pos = random(81);
-      if (!cluePos.includes(pos)) cluePos.push(pos);
+    let emptyNodeCount = 81 - clueCount;
+    let arrEmptyNode = [];
+
+    while (arrEmptyNode.length < emptyNodeCount) {
+      let index = random(81);
+      if (!arrEmptyNode.includes(index)) {
+        arrEmptyNode.push(index);
+        outputMap[index] = ".";
+        if (!this.solveGame(outputMap)) {
+          outputMap[index] = solved[index];
+          arrEmptyNode.pop();
+        }
+      }
     }
 
-    return arrMap.map((_, i) => (cluePos.includes(i) ? +solved[i] : "."));
+    const solvedMap = this.solveGame(outputMap);
+    return {
+      solvedMap: solvedMap,
+      gameMap: outputMap,
+    };
   }
 }
 
