@@ -26,7 +26,7 @@ const defaultState = {
 
 const sudokuReducer = (state = defaultState, action) => {
   let newState = { ...state };
-  const { mode, map, selected } = newState;
+  const { mode, solvedMap, starterMap, map, selected } = newState;
 
   switch (action.type) {
     case MODE:
@@ -41,7 +41,6 @@ const sudokuReducer = (state = defaultState, action) => {
       newState.prohibitedNum = helper.prohibitedNum;
       break;
     case FILL_NODE:
-      sudoku.solveGame(newState.map);
       if (mode === "answer" || mode === "makegame") {
         newState.map[selected] = action.val;
         newState.prohibitedNum = defaultState.prohibitedNum;
@@ -54,7 +53,7 @@ const sudokuReducer = (state = defaultState, action) => {
       break;
     case ERASER:
       if (selected) {
-        if (map[selected] !== ".") {
+        if (starterMap[selected] === "." && map[selected] !== ".") {
           newState.map[selected] = ".";
           const helper = sudoku.getHelper(newState.map, selected);
           newState.helper = helper.helperNode;
@@ -71,18 +70,32 @@ const sudokuReducer = (state = defaultState, action) => {
       newState.modalName = action.modalName;
       break;
     case MAKE_GAME:
-      newState = {
-        ...defaultState,
-        mode: "makegame",
-        solvedMap: emptyMap,
-        map: emptyMap,
-      };
+      if (newState.mode !== "makegame") {
+        newState = {
+          ...defaultState,
+          mode: "makegame",
+          map: emptyMap,
+        };
+      } else {
+        let solve = sudoku.solveGame(newState.map);
+        if (solve) {
+          newState = {
+            ...defaultState,
+            mode: "answer",
+            solvedMap: [...solve],
+            starterMap: [...newState.map],
+            map: [...newState.map],
+          };
+        }
+      }
+
       break;
     case SOLVE:
       newState = {
         ...defaultState,
         mode: "win",
-        map: newState.solvedMap,
+        starterMap: [...starterMap],
+        map: [...solvedMap],
       };
       break;
     case NEW_GAME:

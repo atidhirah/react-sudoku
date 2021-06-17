@@ -36,8 +36,15 @@ class SudokuConsole extends React.Component {
 
   numberButtons() {
     const prohibited = this.props.prohibitedNum;
-    let isMakeGame = this.props.mode === "makegame" ? true : false;
-    let selected = this.props.selected;
+    const mode = this.props.mode;
+    const selected = this.props.selected;
+
+    let classToggleButton = "console-toggle";
+    if (mode === "makegame" || mode === "win") classToggleButton += " disabled";
+
+    let classEraserButton = "console-eraser";
+    if (mode === "win" || !selected) classEraserButton += " disabled";
+
     let numberButtons = Array(9)
       .fill(0)
       .map((_, i) => {
@@ -54,16 +61,10 @@ class SudokuConsole extends React.Component {
 
     return (
       <>
-        <li
-          key="toggle"
-          className={isMakeGame ? "console-toggle disabled" : "console-toggle"}
-        >
+        <li key="toggle" className={classToggleButton}>
           <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
         </li>
-        <li
-          key="eraser"
-          className={selected ? "console-eraser" : "console-eraser disabled"}
-        >
+        <li key="eraser" className={classEraserButton}>
           <button onClick={() => this.props.handleEraser()}>
             <BiEraser />
           </button>
@@ -77,7 +78,8 @@ class SudokuConsole extends React.Component {
 
   gameButtons() {
     const mode = this.props.mode;
-    let isMakeGame = mode === "makegame" ? true : false;
+    let classSolveButton = "";
+    if (mode === "makegame" || mode === "win") classSolveButton = "disabled";
     return (
       <>
         <li key="newGame" className="console-new-game">
@@ -87,12 +89,12 @@ class SudokuConsole extends React.Component {
         </li>
         <li key="makeGame" className="console-make-game">
           <button onClick={() => this.props.handleModal(true, "makegame")}>
-            {isMakeGame ? "Done" : "Make Own Game"}
+            {mode === "makegame" ? "Done" : "Make Own Game"}
           </button>
         </li>
         <li key="solve" className="console-solve">
           <button
-            className={isMakeGame ? "disabled" : ""}
+            className={classSolveButton}
             onClick={() => this.props.handleModal(true, "solve")}
           >
             Solve this pls
