@@ -78,8 +78,11 @@ class SudokuConsole extends React.Component {
 
   gameButtons() {
     const mode = this.props.mode;
+    let isMakeGame = mode === "makegame";
+
     let classSolveButton = "";
     if (mode === "makegame" || mode === "win") classSolveButton = "disabled";
+
     return (
       <>
         <li key="newGame" className="console-new-game">
@@ -88,8 +91,14 @@ class SudokuConsole extends React.Component {
           </button>
         </li>
         <li key="makeGame" className="console-make-game">
-          <button onClick={() => this.props.handleModal(true, "makegame")}>
-            {mode === "makegame" ? "Done" : "Make Own Game"}
+          <button
+            onClick={() =>
+              isMakeGame
+                ? this.props.handleMakeGame()
+                : this.props.handleModal(true, "makegame")
+            }
+          >
+            {isMakeGame ? "Done" : "Make Own Game"}
           </button>
         </li>
         <li key="solve" className="console-solve">

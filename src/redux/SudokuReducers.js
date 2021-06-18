@@ -7,21 +7,21 @@ import {
   MAKE_GAME,
   NEW_GAME,
   SOLVE,
-} from "../actions/SudokuActions";
-import Sudoku from "../../controllers/Sudoku";
+} from "./SudokuActions";
+import Sudoku from "../controllers/Sudoku";
 
 const sudoku = new Sudoku();
 const emptyMap = Array(81).fill(".");
 const defaultState = {
   mode: "answer", // ["answer", "notes", "makegame", "win"]
-  solvedMap: [],
-  starterMap: [],
-  map: [],
+  solvedMap: [...emptyMap],
+  starterMap: [...emptyMap],
+  map: [...emptyMap],
   selected: undefined,
   helper: [],
   prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
   modalStatus: false,
-  modalName: "", // ["", "makegame", "newgame", "solve"]
+  modalName: "", // ["", "makegame", "newgame", "unsolved", "solve"]
 };
 
 const sudokuReducer = (state = defaultState, action) => {
@@ -49,7 +49,6 @@ const sudokuReducer = (state = defaultState, action) => {
           ? addOrRemoveNotes(map[selected], action.val)
           : [action.val];
       }
-
       break;
     case ERASER:
       if (selected) {
@@ -74,7 +73,7 @@ const sudokuReducer = (state = defaultState, action) => {
         newState = {
           ...defaultState,
           mode: "makegame",
-          map: emptyMap,
+          map: [...emptyMap],
         };
       } else {
         let solve = sudoku.solveGame(newState.map);
@@ -86,14 +85,17 @@ const sudokuReducer = (state = defaultState, action) => {
             starterMap: [...newState.map],
             map: [...newState.map],
           };
+        } else {
+          newState.modalStatus = true;
+          newState.modalName = "unsolved";
         }
       }
-
       break;
     case SOLVE:
       newState = {
         ...defaultState,
         mode: "win",
+        solvedMap: [...solvedMap],
         starterMap: [...starterMap],
         map: [...solvedMap],
       };

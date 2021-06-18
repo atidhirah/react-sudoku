@@ -2,7 +2,7 @@ import "./styles/index.scss";
 import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import SudokuReducer from "./redux/reducers/SudokuReducers";
+import SudokuReducer from "./redux/SudokuReducers";
 import { Container } from "./redux/SudokuRedux";
 
 const store = createStore(SudokuReducer);

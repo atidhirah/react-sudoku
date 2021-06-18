@@ -1,4 +1,4 @@
-import solvedSudoku from "./solvedSudoku";
+import solvedSudoku from "../db/solvedSudoku";
 
 class Sudoku {
   constructor() {

@@ -1,6 +1,6 @@
 import React from "react";
-import SudokuBoard from "./BoardElements/SudokuBoard";
-import SudokuConsole from "./ConsoleElements/SudokuConsole";
+import SudokuBoard from "./SudokuBoard";
+import SudokuConsole from "./SudokuConsole";
 import Modals from "./Modals";
 
 class SudokuGame extends React.Component {
@@ -20,6 +20,7 @@ class SudokuGame extends React.Component {
           handleMap={this.props.handleMap}
           handleEraser={this.props.handleEraser}
           handleModal={this.props.handleModal}
+          handleMakeGame={this.props.handleMakeGame}
         />
         <Modals
           modalStatus={this.props.sudokuState.modalStatus}

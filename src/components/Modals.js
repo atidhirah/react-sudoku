@@ -1,51 +1,49 @@
 import React from "react";
+import modalText from "../db/modalText";
 
 class Modals extends React.Component {
   render() {
     const status = this.props.modalStatus;
     const name = this.props.modalName;
+    if (!status) return <></>;
 
-    if (!status) {
-      return <></>;
-    } else {
-      let text;
-      let buttons = this.modalButtons(name);
-      switch (name) {
-        case "makegame":
-          text = "Are you sure want to make your own Sudoku game?";
-          break;
-        default:
-          text = "Your game is not finished yet, are you sure want to give up?";
-      }
+    let text = modalText[name];
+    let buttons = this.modalButtons(name);
 
-      return (
-        <div className="modal">
-          <div className="modal-content">
-            <div className="modal-text">
-              <p>{text}</p>
-            </div>
-            <div className="modal-buttons">{buttons}</div>
+    return (
+      <div className="modal">
+        <div className="modal-content">
+          <div className="modal-text">
+            <p>{text}</p>
           </div>
+          <div className="modal-buttons">{buttons}</div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 
   modalButtons(name) {
+    const buttonText = ["Yes I am sure", "No I change my mind"];
     let handleClick;
-    if (name === "makegame") {
-      handleClick = this.props.handleMakeGame;
-    } else if (name === "newgame") {
-      handleClick = this.props.handleNewGame;
-    } else {
-      handleClick = this.props.handleSolve;
+    switch (name) {
+      case "makegame":
+        handleClick = this.props.handleMakeGame;
+        break;
+      case "unsolved":
+        handleClick = this.props.handleMakeGame;
+        break;
+      case "newgame":
+        handleClick = this.props.handleNewGame;
+        break;
+      default:
+        handleClick = this.props.handleSolve;
     }
 
     return (
       <>
-        <button onClick={() => handleClick()}>Yes I am sure</button>
+        <button onClick={() => handleClick()}>{buttonText[0]}</button>
         <button onClick={() => this.props.handleModal(false, "")}>
-          No I change my mind
+          {buttonText[1]}
         </button>
       </>
     );

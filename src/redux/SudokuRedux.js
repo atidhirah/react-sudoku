@@ -8,7 +8,7 @@ import {
   makeGameAction,
   newGameAction,
   solveAction,
-} from "./actions/SudokuActions";
+} from "./SudokuActions";
 import SudokuGame from "../components/SudokuGame";
 
 const mapStateToProp = (state) => ({ sudokuState: state });

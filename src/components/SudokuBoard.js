@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SudokuRegion from "./SudokuRegion";
-import Sudoku from "../../controllers/Sudoku";
+import Sudoku from "../controllers/Sudoku";
 
 class SudokuBoard extends Component {
   render() {
