@@ -1,16 +1,9 @@
 import React from "react";
 
 class SudokuNode extends React.Component {
-  handleClick() {
-    const pos = this.props.pos;
-    this.props.handleSelect(pos);
-  }
-
   render() {
-    const isStarter = this.props.isStarter;
-    const isSelected = this.props.isSelected;
-    const isHelper = this.props.isHelper;
-    const val = this.props.val;
+    const { pos, val, isStarter, isSelected, isHelper } = this.props;
+
     let elem = Array.isArray(val)
       ? this.renderNotes(val)
       : this.renderNumber(val);
@@ -22,7 +15,7 @@ class SudokuNode extends React.Component {
       <div
         id={`node-${this.props.pos}`}
         className={`sudoku-node ${bg}`}
-        onClick={() => this.handleClick()}
+        onClick={() => this.props.handleSelect(pos)}
       >
         {elem}
       </div>

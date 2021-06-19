@@ -23,7 +23,7 @@ class Modals extends React.Component {
   }
 
   modalButtons(name) {
-    const buttonText = ["Yes I am sure", "No I change my mind"];
+    let buttonText = ["Yes I am sure", "No I change my mind"];
     let handleClick;
     switch (name) {
       case "makegame":
@@ -31,6 +31,7 @@ class Modals extends React.Component {
         break;
       case "unsolved":
         handleClick = this.props.handleMakeGame;
+        buttonText = ["Okay", "No leave it as it now"];
         break;
       case "newgame":
         handleClick = this.props.handleNewGame;

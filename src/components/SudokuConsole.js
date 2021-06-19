@@ -3,26 +3,25 @@ import { BiEraser } from "react-icons/bi";
 
 class SudokuConsole extends React.Component {
   render() {
-    let mode = this.getMode();
-    let numberButtons = this.numberButtons();
-    let gameButtons = this.gameButtons();
-
     return (
       <div className="sudoku-console">
         <p className="console-mode">
-          Mode : <span>{mode}</span>
+          Mode : <span>{this.getModeText()}</span>
         </p>
         <ul className="console-buttons">
-          {numberButtons}
-          {gameButtons}
+          {this.toggleModeButton()}
+          {this.eraserButton()}
+          {this.numberButtons()}
+          {this.newGameButton()}
+          {this.makeGameButton()}
+          {this.solveGameButton()}
         </ul>
       </div>
     );
   }
 
-  getMode() {
-    let mode = this.props.mode;
-    switch (mode) {
+  getModeText() {
+    switch (this.props.mode) {
       case "win":
         return "You Win!";
       case "makegame":
@@ -36,14 +35,6 @@ class SudokuConsole extends React.Component {
 
   numberButtons() {
     const prohibited = this.props.prohibitedNum;
-    const mode = this.props.mode;
-    const selected = this.props.selected;
-
-    let classToggleButton = "console-toggle";
-    if (mode === "makegame" || mode === "win") classToggleButton += " disabled";
-
-    let classEraserButton = "console-eraser";
-    if (mode === "win" || !selected) classEraserButton += " disabled";
 
     let numberButtons = Array(9)
       .fill(0)
@@ -54,6 +45,7 @@ class SudokuConsole extends React.Component {
           : "console-number";
         return (
           <li key={num} className={className}>
+            <div className="console-number-count">9</div>
             <button onClick={() => this.props.handleMap(num)}>{num}</button>
           </li>
         );
@@ -61,14 +53,6 @@ class SudokuConsole extends React.Component {
 
     return (
       <>
-        <li key="toggle" className={classToggleButton}>
-          <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
-        </li>
-        <li key="eraser" className={classEraserButton}>
-          <button onClick={() => this.props.handleEraser()}>
-            <BiEraser />
-          </button>
-        </li>
         <li key="numbers" className="console-numbers">
           <ul>{numberButtons}</ul>
         </li>
@@ -76,40 +60,73 @@ class SudokuConsole extends React.Component {
     );
   }
 
-  gameButtons() {
+  toggleModeButton() {
     const mode = this.props.mode;
-    let isMakeGame = mode === "makegame";
+    let classToggleButton = "console-toggle";
+    if (mode === "makegame" || mode === "win") classToggleButton += " disabled";
 
+    return (
+      <li key="toggle" className={classToggleButton}>
+        <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
+      </li>
+    );
+  }
+
+  eraserButton() {
+    const mode = this.props.mode;
+    const selected = this.props.selected;
+    let classEraserButton = "console-eraser";
+    if (mode === "win" || !selected) classEraserButton += " disabled";
+    return (
+      <li key="eraser" className={classEraserButton}>
+        <button onClick={() => this.props.handleEraser()}>
+          <BiEraser />
+        </button>
+      </li>
+    );
+  }
+
+  newGameButton() {
+    return (
+      <li key="newGame" className="console-new-game">
+        <button onClick={() => this.props.handleModal(true, "newgame")}>
+          New Game
+        </button>
+      </li>
+    );
+  }
+
+  makeGameButton() {
+    const isMakeGame = this.props.mode === "makegame";
+    return (
+      <li key="makeGame" className="console-make-game">
+        <button
+          onClick={() =>
+            isMakeGame
+              ? this.props.handleMakeGame()
+              : this.props.handleModal(true, "makegame")
+          }
+        >
+          {isMakeGame ? "Done" : "Make Own Game"}
+        </button>
+      </li>
+    );
+  }
+
+  solveGameButton() {
+    const mode = this.props.mode;
     let classSolveButton = "";
     if (mode === "makegame" || mode === "win") classSolveButton = "disabled";
 
     return (
-      <>
-        <li key="newGame" className="console-new-game">
-          <button onClick={() => this.props.handleModal(true, "newgame")}>
-            New Game
-          </button>
-        </li>
-        <li key="makeGame" className="console-make-game">
-          <button
-            onClick={() =>
-              isMakeGame
-                ? this.props.handleMakeGame()
-                : this.props.handleModal(true, "makegame")
-            }
-          >
-            {isMakeGame ? "Done" : "Make Own Game"}
-          </button>
-        </li>
-        <li key="solve" className="console-solve">
-          <button
-            className={classSolveButton}
-            onClick={() => this.props.handleModal(true, "solve")}
-          >
-            Solve this pls
-          </button>
-        </li>
-      </>
+      <li key="solve" className="console-solve">
+        <button
+          className={classSolveButton}
+          onClick={() => this.props.handleModal(true, "solve")}
+        >
+          Solve this pls
+        </button>
+      </li>
     );
   }
 }
