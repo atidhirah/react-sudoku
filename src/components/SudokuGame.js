@@ -13,6 +13,7 @@ class SudokuGame extends React.Component {
         />
         <SudokuConsole
           mode={this.props.sudokuState.mode}
+          numberCount={this.props.sudokuState.numberCount}
           selected={this.props.sudokuState.selected}
           prohibitedNum={this.props.sudokuState.prohibitedNum}
           modalName={this.props.sudokuState.modalName}

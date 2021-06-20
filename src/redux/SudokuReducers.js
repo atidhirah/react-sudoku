@@ -12,11 +12,13 @@ import Sudoku from "../controllers/Sudoku";
 
 const sudoku = new Sudoku();
 const emptyMap = Array(81).fill(".");
+
 const defaultState = {
   mode: "answer", // ["answer", "notes", "makegame", "win"]
   solvedMap: [...emptyMap],
   starterMap: [...emptyMap],
   map: [...emptyMap],
+  numberCount: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
   selected: undefined,
   helper: [],
   prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -42,7 +44,9 @@ const sudokuReducer = (state = defaultState, action) => {
       break;
     case FILL_NODE:
       if (mode === "answer" || mode === "makegame") {
-        newState.map[selected] = action.val;
+        let val = action.val;
+        newState.map[selected] = val;
+        newState.numberCount[val] += 1;
         newState.prohibitedNum = defaultState.prohibitedNum;
       } else if (mode === "notes") {
         newState.map[selected] = Array.isArray(map[selected])
@@ -53,6 +57,7 @@ const sudokuReducer = (state = defaultState, action) => {
     case ERASER:
       if (selected) {
         if (starterMap[selected] === "." && map[selected] !== ".") {
+          newState.numberCount[map[selected]] -= 1;
           newState.map[selected] = ".";
           const helper = sudoku.getHelper(newState.map, selected);
           newState.helper = helper.helperNode;
@@ -98,6 +103,7 @@ const sudokuReducer = (state = defaultState, action) => {
         solvedMap: [...solvedMap],
         starterMap: [...starterMap],
         map: [...solvedMap],
+        numberCount: { 1: 9, 2: 9, 3: 9, 4: 9, 5: 9, 6: 9, 7: 9, 8: 9, 9: 9 },
       };
       break;
     case NEW_GAME:
@@ -109,6 +115,7 @@ const sudokuReducer = (state = defaultState, action) => {
         solvedMap: [...game.solvedMap],
         starterMap: [...game.gameMap],
         map: [...game.gameMap],
+        numberCount: { ...game.numberCount },
       };
   }
   return newState;

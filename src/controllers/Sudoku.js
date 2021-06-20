@@ -167,10 +167,22 @@ class Sudoku {
       }
     }
 
+    const numberCount = {};
+    outputMap.forEach((node) => {
+      if (Number.isInteger(node)) {
+        if (numberCount.hasOwnProperty(node)) {
+          numberCount[node] += 1;
+        } else {
+          numberCount[node] = 1;
+        }
+      }
+    });
+
     const solvedMap = this.solveGame(outputMap);
     return {
       solvedMap: solvedMap,
       gameMap: outputMap,
+      numberCount: numberCount,
     };
   }
 }

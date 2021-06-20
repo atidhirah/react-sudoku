@@ -34,6 +34,7 @@ class SudokuConsole extends React.Component {
   }
 
   numberButtons() {
+    const numberCount = this.props.numberCount;
     const prohibited = this.props.prohibitedNum;
 
     let numberButtons = Array(9)
@@ -45,7 +46,7 @@ class SudokuConsole extends React.Component {
           : "console-number";
         return (
           <li key={num} className={className}>
-            <div className="console-number-count">9</div>
+            <div className="console-number-count">{numberCount[num]}</div>
             <button onClick={() => this.props.handleMap(num)}>{num}</button>
           </li>
         );
