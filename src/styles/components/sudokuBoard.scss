@@ -62,3 +62,14 @@
     }
   }
 }
+
+@media screen and (max-width: $small) {
+  .sudoku-board {
+    .sudoku-region {
+      .sudoku-node {
+        width: 45px;
+        height: 45px;
+      }
+    }
+  }
+}

@@ -10,93 +10,92 @@
   flex-direction: column;
   margin-left: 2rem;
 
-  .console-mode {
-    color: $clrNumber;
-    width: 100%;
-    padding: 0 4px;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-
   .console-buttons {
-    display: grid;
-    grid-template-areas:
-      "toggle toggle erase"
-      "number number number"
-      "new new new"
-      "make make make"
-      "solve solve solve";
+    display: flex;
+    flex-direction: column;
     gap: 10px;
 
-    .console-toggle {
-      grid-area: toggle;
-      width: 110px;
-      button {
-        text-transform: uppercase;
-        font-size: 0.65rem;
+    .console-row-1 {
+      display: grid;
+      grid-template-areas:
+        "m m m m m "
+        "t t t e e";
+
+      .console-mode {
+        grid-area: m;
+        color: $clrNumber;
+        width: 100%;
+        padding: 0 4px;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+
+      .console-toggle {
+        grid-area: t;
+        margin-right: 3px;
+        button {
+          text-transform: uppercase;
+          font-size: 0.65rem;
+        }
+      }
+
+      .console-eraser {
+        grid-area: e;
+        button {
+          background-color: $clrEraser;
+          font-size: 1.2rem;
+        }
       }
     }
 
-    .console-eraser {
-      grid-area: erase;
-      width: 50px;
-      button {
-        background-color: $clrEraser;
-        font-size: 1.2rem;
-      }
-    }
+    .console-row-2 {
+      .console-numbers {
+        ul {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 10px;
 
-    .console-numbers {
-      grid-area: number;
+          .console-number {
+            width: 50px;
+            height: 50px;
+            position: relative;
 
-      ul {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px;
+            div {
+              background-color: $clrNumber;
+              color: $clrBoardBg;
+              width: 15px;
+              height: 15px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 0.7rem;
+              font-weight: bold;
+              border-radius: 5px;
+              position: absolute;
+              top: 0;
+              right: 0;
+            }
 
-        .console-number {
-          width: 50px;
-          height: 50px;
-          position: relative;
-
-          div {
-            background-color: $clrNumber;
-            color: $clrBoardBg;
-            width: 15px;
-            height: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-            border-radius: 5px;
-            position: absolute;
-            top: 0;
-            right: 0;
-          }
-
-          button {
-            font-size: 1.2rem;
+            button {
+              font-size: 1.2rem;
+            }
           }
         }
       }
     }
 
-    .console-new-game {
-      grid-area: new;
-    }
+    .console-row-3 {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
-    .console-make-game {
-      grid-area: make;
-    }
+      .console-solve {
+        button {
+          background-color: $clrSolve;
 
-    .console-solve {
-      grid-area: solve;
-      button {
-        background-color: $clrSolve;
-
-        &:hover {
-          background-color: $clrSolveHover !important;
+          &:hover {
+            background-color: $clrSolveHover !important;
+          }
         }
       }
     }
@@ -122,5 +121,68 @@
   .disabled {
     pointer-events: none;
     opacity: 0.5;
+  }
+}
+
+@media screen and (max-width: $small) {
+  .sudoku-console {
+    margin-top: 10px;
+    .console-buttons {
+      grid-template-areas:
+        "mode toggle erase"
+        "number number number"
+        "new make solve";
+
+      .console-row-1 {
+        display: flex;
+        align-items: center;
+
+        .console-mode {
+          width: 100%;
+          margin: 0;
+          justify-content: start;
+          align-items: center;
+
+          span {
+            margin-left: 10px;
+          }
+        }
+
+        .console-toggle {
+          justify-self: end;
+          min-width: 110px;
+          button {
+            text-transform: uppercase;
+            font-size: 0.65rem;
+          }
+        }
+
+        .console-eraser {
+          justify-self: end;
+          min-width: 50px;
+          button {
+            background-color: $clrEraser;
+            font-size: 1.2rem;
+          }
+        }
+      }
+
+      .console-row-2 {
+        .console-numbers {
+          ul {
+            grid-template-columns: repeat(9, 1fr);
+            gap: 3px;
+          }
+        }
+      }
+
+      .console-row-3 {
+        flex-direction: row;
+
+        div {
+          width: 100%;
+        }
+      }
+    }
   }
 }

@@ -5,16 +5,22 @@ class SudokuConsole extends React.Component {
   render() {
     return (
       <div className="sudoku-console">
-        <p className="console-mode">
-          Mode : <span>{this.getModeText()}</span>
-        </p>
         <ul className="console-buttons">
-          {this.toggleModeButton()}
-          {this.eraserButton()}
-          {this.numberButtons()}
-          {this.newGameButton()}
-          {this.makeGameButton()}
-          {this.solveGameButton()}
+          <li key="row1" className="console-row-1">
+            <p className="console-mode">
+              Mode : <span>{this.getModeText()}</span>
+            </p>
+            {this.toggleModeButton()}
+            {this.eraserButton()}
+          </li>
+          <li key="row2" className="console-row-2">
+            {this.numberButtons()}
+          </li>
+          <li key="row3" className="console-row-3">
+            {this.newGameButton()}
+            {this.makeGameButton()}
+            {this.solveGameButton()}
+          </li>
         </ul>
       </div>
     );
@@ -54,9 +60,9 @@ class SudokuConsole extends React.Component {
 
     return (
       <>
-        <li key="numbers" className="console-numbers">
+        <div className="console-numbers">
           <ul>{numberButtons}</ul>
-        </li>
+        </div>
       </>
     );
   }
@@ -67,9 +73,9 @@ class SudokuConsole extends React.Component {
     if (mode === "makegame" || mode === "win") classToggleButton += " disabled";
 
     return (
-      <li key="toggle" className={classToggleButton}>
+      <div className={classToggleButton}>
         <button onClick={() => this.props.handleMode()}>Toggle Mode</button>
-      </li>
+      </div>
     );
   }
 
@@ -79,28 +85,28 @@ class SudokuConsole extends React.Component {
     let classEraserButton = "console-eraser";
     if (mode === "win" || !selected) classEraserButton += " disabled";
     return (
-      <li key="eraser" className={classEraserButton}>
+      <div className={classEraserButton}>
         <button onClick={() => this.props.handleEraser()}>
           <BiEraser />
         </button>
-      </li>
+      </div>
     );
   }
 
   newGameButton() {
     return (
-      <li key="newGame" className="console-new-game">
+      <div className="console-new-game">
         <button onClick={() => this.props.handleModal(true, "newgame")}>
           New Game
         </button>
-      </li>
+      </div>
     );
   }
 
   makeGameButton() {
     const isMakeGame = this.props.mode === "makegame";
     return (
-      <li key="makeGame" className="console-make-game">
+      <div className="console-make-game">
         <button
           onClick={() =>
             isMakeGame
@@ -110,7 +116,7 @@ class SudokuConsole extends React.Component {
         >
           {isMakeGame ? "Done" : "Make Own Game"}
         </button>
-      </li>
+      </div>
     );
   }
 
@@ -120,14 +126,14 @@ class SudokuConsole extends React.Component {
     if (mode === "makegame" || mode === "win") classSolveButton = "disabled";
 
     return (
-      <li key="solve" className="console-solve">
+      <div className="console-solve">
         <button
           className={classSolveButton}
           onClick={() => this.props.handleModal(true, "solve")}
         >
           Solve this pls
         </button>
-      </li>
+      </div>
     );
   }
 }
