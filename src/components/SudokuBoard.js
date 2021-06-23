@@ -35,9 +35,9 @@ class SudokuBoard extends Component {
       });
 
     return (
-      <div>
+      <>
         <ul className="sudoku-board">{regionList}</ul>
-      </div>
+      </>
     );
   }
 }

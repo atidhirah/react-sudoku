@@ -38,7 +38,7 @@ body {
   align-items: center;
 }
 
-@media screen and (max-width: $small) {
+@media screen and (max-width: $medium) {
   .sudoku-game {
     flex-direction: column;
     margin: 30px 0;

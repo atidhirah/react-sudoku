@@ -114,7 +114,7 @@ class SudokuConsole extends React.Component {
               : this.props.handleModal(true, "makegame")
           }
         >
-          {isMakeGame ? "Done" : "Make Own Game"}
+          {isMakeGame ? "Done" : "Make Game"}
         </button>
       </div>
     );
