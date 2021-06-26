@@ -65,10 +65,22 @@
 
 @media screen and (max-width: $medium) {
   .sudoku-board {
+    border-width: 1px;
     .sudoku-region {
+      border-width: 1px;
       .sudoku-node {
         width: 45px;
         height: 45px;
+
+        .node-notes {
+          .node-note {
+            width: 100%;
+            height: 100%;
+            font-size: 0.55rem;
+            font-size: #max(2vw, 0.55rem);
+            font-weight: normal;
+          }
+        }
       }
     }
   }
@@ -78,11 +90,17 @@
   .sudoku-board {
     .sudoku-region {
       .sudoku-node {
-        width: 9vw;
-        height: 9vw;
+        width: 10vw;
+        height: 10vw;
 
         .node-value {
           font-size: 7vw;
+        }
+
+        .node-notes {
+          .node-note {
+            font-size: 2vw;
+          }
         }
       }
     }

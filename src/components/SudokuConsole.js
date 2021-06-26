@@ -131,7 +131,7 @@ class SudokuConsole extends React.Component {
           className={classSolveButton}
           onClick={() => this.props.handleModal(true, "solve")}
         >
-          Solve this pls
+          Solve Game
         </button>
       </div>
     );
