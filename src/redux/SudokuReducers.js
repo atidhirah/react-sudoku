@@ -57,7 +57,9 @@ const sudokuReducer = (state = defaultState, action) => {
     case ERASER:
       if (selected) {
         if (starterMap[selected] === "." && map[selected] !== ".") {
-          newState.numberCount[map[selected]] -= 1;
+          if (Number.isInteger(map[selected])) {
+            newState.numberCount[map[selected]] -= 1;
+          }
           newState.map[selected] = ".";
           const helper = sudoku.getHelper(newState.map, selected);
           newState.helper = helper.helperNode;
