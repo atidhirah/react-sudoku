@@ -1,5 +1,6 @@
 .modal {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
   width: 100%;
   height: 100vh;
   display: flex;
@@ -14,14 +15,29 @@
     background-color: $clrBoardBg;
     width: 300px;
     min-height: 150px;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+
+    .modal-close {
+      background: none;
+      color: $clrNumber;
+      display: flex;
+      font-size: 1.2rem;
+      border: none;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+    }
 
     .modal-text {
       color: $clrNumber;
+      margin: 10px 20px 0 0;
+      font-size: 0.9rem;
     }
 
     .modal-buttons {

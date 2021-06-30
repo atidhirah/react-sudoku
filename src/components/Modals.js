@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import modalText from "../db/modalText";
 
 class Modals extends React.Component {
@@ -13,6 +14,12 @@ class Modals extends React.Component {
     return (
       <div className="modal">
         <div className="modal-content">
+          <button
+            className="modal-close"
+            onClick={() => this.props.handleModal(false, "")}
+          >
+            <AiOutlineClose />
+          </button>
           <div className="modal-text">
             <p>{text}</p>
           </div>
@@ -23,7 +30,7 @@ class Modals extends React.Component {
   }
 
   modalButtons(name) {
-    let buttonText = ["Yes I am sure", "No I change my mind"];
+    let buttonText = ["Yes", "No"];
     let handleClick;
     switch (name) {
       case "makegame":
@@ -31,13 +38,21 @@ class Modals extends React.Component {
         break;
       case "unsolved":
         handleClick = this.props.handleMakeGame;
-        buttonText = ["Okay", "No leave it as it now"];
-        break;
-      case "newgame":
-        handleClick = this.props.handleNewGame;
         break;
       default:
         handleClick = this.props.handleSolve;
+    }
+
+    if (name === "newgame") {
+      return (
+        <>
+          <button onClick={() => this.props.handleNewGame("easy")}>Easy</button>
+          <button onClick={() => this.props.handleNewGame("medium")}>
+            Medium
+          </button>
+          <button onClick={() => this.props.handleNewGame("hard")}>Hard</button>
+        </>
+      );
     }
 
     return (

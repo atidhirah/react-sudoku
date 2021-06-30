@@ -49,6 +49,7 @@ class SudokuNode extends React.Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.val !== nextProps.val ||
+      this.props.isStarter !== nextProps.isStarter ||
       this.props.isSelected !== nextProps.isSelected ||
       this.props.isHelper !== nextProps.isHelper
     ) {

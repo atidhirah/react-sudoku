@@ -149,40 +149,40 @@ class Sudoku {
     const solved = solvedSudoku[random(solvedSudoku.length)]
       .split("")
       .map((item) => +item);
-    const outputMap = [...solved];
+    const outputMap = Array(81).fill(".");
 
     let clueCount = level === "easy" ? 38 : level === "medium" ? 30 : 20;
-    let emptyNodeCount = 81 - clueCount;
-    let arrEmptyNode = [];
-
-    while (arrEmptyNode.length < emptyNodeCount) {
+    let arrCluePos = [];
+    while (arrCluePos.length < clueCount) {
       let index = random(81);
-      if (!arrEmptyNode.includes(index)) {
-        arrEmptyNode.push(index);
-        outputMap[index] = ".";
-        if (!this.solveGame(outputMap)) {
-          outputMap[index] = solved[index];
-          arrEmptyNode.pop();
-        }
+      if (!arrCluePos.includes(index)) {
+        arrCluePos.push(index);
+        outputMap[index] = solved[index];
       }
     }
 
-    const numberCount = {};
+    // Count for how many number appears
+    const numbers = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
+      8: 0,
+      9: 0,
+    };
     outputMap.forEach((node) => {
       if (Number.isInteger(node)) {
-        if (numberCount.hasOwnProperty(node)) {
-          numberCount[node] += 1;
-        } else {
-          numberCount[node] = 1;
-        }
+        numbers[node] += 1;
       }
     });
 
-    const solvedMap = this.solveGame(outputMap);
     return {
-      solvedMap: solvedMap,
+      solvedMap: solved,
       gameMap: outputMap,
-      numberCount: numberCount,
+      numberCount: numbers,
     };
   }
 }
