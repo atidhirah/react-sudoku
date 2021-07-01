@@ -1,9 +1,34 @@
 import React, { Component } from "react";
 import SudokuRegion from "./SudokuRegion";
 import Sudoku from "../controllers/Sudoku";
+import { GoPrimitiveDot } from "react-icons/go";
 
 class SudokuBoard extends Component {
   render() {
+    return (
+      <div className="sudoku-board-container">
+        {this.renderMistakeDot()}
+        {this.renderBoard()}
+      </div>
+    );
+  }
+
+  renderMistakeDot() {
+    const m = this.props.sudokuState.mistakes;
+    let d1 = m >= 1 ? <GoPrimitiveDot className="red" /> : <GoPrimitiveDot />;
+    let d2 = m >= 2 ? <GoPrimitiveDot className="red" /> : <GoPrimitiveDot />;
+    let d3 = m >= 3 ? <GoPrimitiveDot className="red" /> : <GoPrimitiveDot />;
+
+    return (
+      <p className="sudoku-mistake">
+        {d1}
+        {d2}
+        {d3}
+      </p>
+    );
+  }
+
+  renderBoard() {
     const sudoku = new Sudoku();
     const regionMap = sudoku.regionMap;
     const arrStarterMap = this.props.sudokuState.starterMap;
@@ -33,12 +58,7 @@ class SudokuBoard extends Component {
           </li>
         );
       });
-
-    return (
-      <>
-        <ul className="sudoku-board">{regionList}</ul>
-      </>
-    );
+    return <ul className="sudoku-board">{regionList}</ul>;
   }
 }
 

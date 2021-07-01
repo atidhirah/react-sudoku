@@ -6,6 +6,15 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.sudoku-mistake {
+  color: $clrNumber;
+  text-align: end;
+
+  .red {
+    color: red;
+  }
+}
+
 .sudoku-board {
   color: $clrNumber;
   width: fit-content;

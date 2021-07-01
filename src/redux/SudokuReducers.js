@@ -22,6 +22,7 @@ const defaultState = {
   selected: undefined,
   helper: [],
   prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  mistakes: 2,
   modalStatus: false,
   modalName: "", // ["", "makegame", "newgame", "unsolved", "solve"]
 };
@@ -45,6 +46,11 @@ const sudokuReducer = (state = defaultState, action) => {
     case FILL_NODE:
       if (mode === "answer" || mode === "makegame") {
         let val = action.val;
+
+        if (solvedMap[selected] !== val) {
+          newState.mistake += 1;
+        }
+
         newState.map[selected] = val;
         newState.numberCount[val] += 1;
         newState.prohibitedNum = defaultState.prohibitedNum;
