@@ -26,7 +26,8 @@ class SudokuNode extends React.Component {
     const { solvedVal } = this.props;
     let display = val === "." ? "" : val;
     let style = "node-value";
-    if (val !== "." && val !== solvedVal) style += " mistake";
+    if (solvedVal !== "." && val !== "." && val !== solvedVal)
+      style += " mistake";
 
     return <p className={style}>{display}</p>;
   }

@@ -127,14 +127,17 @@ const sudokuReducer = (state = defaultState, action) => {
       };
   }
 
-  if (newState.mistakes === 3) {
-    newState.modalStatus = true;
-    newState.modalName = "gameover";
+  if (newState.mode !== "makegame") {
+    if (newState.mistakes === 3) {
+      newState.modalStatus = true;
+      newState.modalName = "gameover";
+    }
+
+    if (newState.map.every((val, i) => val === newState.solvedMap[i])) {
+      newState.mode = "win";
+    }
   }
 
-  if (newState.map.every((val, i) => val === newState.solvedMap[i])) {
-    newState.mode = "win";
-  }
   return newState;
 };
 
