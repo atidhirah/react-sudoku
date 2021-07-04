@@ -131,6 +131,10 @@ const sudokuReducer = (state = defaultState, action) => {
     newState.modalStatus = true;
     newState.modalName = "gameover";
   }
+
+  if (newState.map.every((val, i) => val === newState.solvedMap[i])) {
+    newState.mode = "win";
+  }
   return newState;
 };
 

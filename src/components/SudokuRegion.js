@@ -3,11 +3,8 @@ import SudokuNode from "./SudokuNode";
 
 class SudokuRegion extends React.Component {
   render() {
-    const arrPos = this.props.arrPos;
-    const arrStarter = this.props.arrStarter;
-    const arrVal = this.props.arrVal;
-    const arrHelper = this.props.arrHelper;
-    const selectedVal = this.props.selectedVal;
+    const { arrPos, arrSolved, arrStarter, arrVal, arrHelper, selectedVal } =
+      this.props;
 
     let nodeList = Array(9)
       .fill(0)
@@ -19,6 +16,7 @@ class SudokuRegion extends React.Component {
           <li key={arrPos[i]}>
             <SudokuNode
               pos={arrPos[i]}
+              solvedVal={arrSolved[i]}
               val={arrVal[i]}
               isStarter={isStarter}
               isSelected={isSelected}

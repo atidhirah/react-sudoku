@@ -31,28 +31,28 @@ class SudokuBoard extends Component {
   renderBoard() {
     const sudoku = new Sudoku();
     const regionMap = sudoku.regionMap;
-    const arrStarterMap = this.props.sudokuState.starterMap;
-    const arrMap = this.props.sudokuState.map;
-    const arrHelper = this.props.sudokuState.helper;
-    const selectedVal = this.props.sudokuState.selected;
+    const { solvedMap, starterMap, map, helper, selected } =
+      this.props.sudokuState;
 
     let regionList = Array(9)
       .fill(0)
       .map((_, i) => {
         const key = `region_${i + 1}`;
         const arrPos = regionMap[key];
-        const arrStarter = arrPos.map((pos) => arrStarterMap[pos]);
-        const arrVal = arrPos.map((pos) => arrMap[pos]);
+        const arrSolved = arrPos.map((pos) => solvedMap[pos]);
+        const arrStarter = arrPos.map((pos) => starterMap[pos]);
+        const arrVal = arrPos.map((pos) => map[pos]);
 
         return (
           <li key={key}>
             <SudokuRegion
               id={key}
               arrPos={arrPos}
+              arrSolved={arrSolved}
               arrStarter={arrStarter}
               arrVal={arrVal}
-              arrHelper={arrHelper}
-              selectedVal={selectedVal}
+              arrHelper={helper}
+              selectedVal={selected}
               handleSelect={this.props.handleSelect}
             />
           </li>
