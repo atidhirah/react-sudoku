@@ -73,6 +73,10 @@
 }
 
 @media screen and (max-width: $medium) {
+  .sudoku-mistake {
+    font-size: 0.8rem;
+  }
+
   .sudoku-board {
     border-width: 1px;
     .sudoku-region {
@@ -96,6 +100,9 @@
 }
 
 @media screen and (max-width: $small) {
+  .sudoku-mistake {
+    font-size: 0.7rem;
+  }
   .sudoku-board {
     .sudoku-region {
       .sudoku-node {

@@ -30,20 +30,7 @@ class Modals extends React.Component {
   }
 
   modalButtons(name) {
-    let buttonText = ["Yes", "No"];
-    let handleClick;
-    switch (name) {
-      case "makegame":
-        handleClick = this.props.handleMakeGame;
-        break;
-      case "unsolved":
-        handleClick = this.props.handleMakeGame;
-        break;
-      default:
-        handleClick = this.props.handleSolve;
-    }
-
-    if (name === "newgame") {
+    if (name === "newgame" || name === "gameover") {
       return (
         <>
           <button onClick={() => this.props.handleNewGame("easy")}>Easy</button>
@@ -55,12 +42,13 @@ class Modals extends React.Component {
       );
     }
 
+    let handleClick =
+      name === "solve" ? this.props.handleSolve : this.props.handleMakeGame;
+
     return (
       <>
-        <button onClick={() => handleClick()}>{buttonText[0]}</button>
-        <button onClick={() => this.props.handleModal(false, "")}>
-          {buttonText[1]}
-        </button>
+        <button onClick={() => handleClick()}>Yes</button>
+        <button onClick={() => this.props.handleModal(false, "")}>No</button>
       </>
     );
   }

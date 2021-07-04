@@ -118,6 +118,16 @@
     }
   }
 
+  .console-linkedin {
+    color: $clrNumber;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+
+    a {
+      color: $clrSelectedNode;
+    }
+  }
+
   .disabled {
     pointer-events: none;
     opacity: 0.5;

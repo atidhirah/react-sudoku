@@ -22,6 +22,16 @@ class SudokuConsole extends React.Component {
             {this.solveGameButton()}
           </li>
         </ul>
+        <p className="console-linkedin">
+          Created by{" "}
+          <a
+            href="https://www.linkedin.com/in/atidhira-habibillah-551098209/"
+            target="_blank"
+            rel="noopener norefferer"
+          >
+            atidhirah
+          </a>
+        </p>
       </div>
     );
   }

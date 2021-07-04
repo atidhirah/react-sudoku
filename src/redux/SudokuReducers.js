@@ -22,7 +22,7 @@ const defaultState = {
   selected: undefined,
   helper: [],
   prohibitedNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  mistakes: 2,
+  mistakes: 0,
   modalStatus: false,
   modalName: "", // ["", "makegame", "newgame", "unsolved", "solve"]
 };
@@ -44,20 +44,20 @@ const sudokuReducer = (state = defaultState, action) => {
       newState.prohibitedNum = helper.prohibitedNum;
       break;
     case FILL_NODE:
-      if (mode === "answer" || mode === "makegame") {
+      if (mode === "notes") {
+        newState.map[selected] = Array.isArray(map[selected])
+          ? addOrRemoveNotes(map[selected], action.val)
+          : [action.val];
+      } else {
         let val = action.val;
 
-        if (solvedMap[selected] !== val) {
-          newState.mistake += 1;
+        if (mode === "answer" && solvedMap[selected] !== val) {
+          newState.mistakes += 1;
         }
 
         newState.map[selected] = val;
         newState.numberCount[val] += 1;
         newState.prohibitedNum = defaultState.prohibitedNum;
-      } else if (mode === "notes") {
-        newState.map[selected] = Array.isArray(map[selected])
-          ? addOrRemoveNotes(map[selected], action.val)
-          : [action.val];
       }
       break;
     case ERASER:
@@ -125,6 +125,11 @@ const sudokuReducer = (state = defaultState, action) => {
         map: [...game.gameMap],
         numberCount: { ...game.numberCount },
       };
+  }
+
+  if (newState.mistakes === 3) {
+    newState.modalStatus = true;
+    newState.modalName = "gameover";
   }
   return newState;
 };
